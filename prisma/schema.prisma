@@ -14,20 +14,50 @@ datasource db {
 }
 
 model User {
-  id           Int       @id @default(autoincrement())
-  email        String    @unique
-  name         String
-  services     Service[] 
+  id       Int       @id @default(autoincrement())
+  email    String    @unique
+  name     String
+  rol      String
+  services Service[]
 }
 
 model Service {
-  id             Int       @id @default(autoincrement())
-  title          String
-  description    String
-  photos         String[] 
-  contact        String    
-  rating         Float     @default(0) // Puntuación del servicio (de 0 a 5 estrellas)
-  category       String    
-  user           User      @relation(fields: [userId], references: [id]) // Relación muchos a uno con el usuario que ofrece el servicio
-  userId         Int       // Clave foránea del usuario que ofrece el servicio
+  id          Int        @id @default(autoincrement())
+  title       String
+  description String
+  photos      String[]
+  contact     String
+  review      Review[]
+  reviewId    Int
+  category    String
+  user        User       @relation(fields: [userId], references: [id]) // Relación muchos a uno con el usuario que ofrece el servicio
+  userId      Int // Clave foránea del usuario que ofrece el servicio
+  schedules   Schedule[]
+}
+
+model Review {
+  id        Int     @id @default(autoincrement())
+  rating    Float   @default(0)
+  comment   String?
+  serviceId Int
+  service   Service @relation(fields: [serviceId], references: [id])
+}
+
+model Schedule {
+  id        Int      @id @default(autoincrement())
+  day       String // Día de la semana (p.ej. "Monday")
+  startTime DateTime
+  endTime   DateTime
+  address   String
+  service   Service  @relation(fields: [serviceId], references: [id])
+  serviceId Int
+}
+
+model Booking {
+  id         Int      @id @default(autoincrement())
+  userId     Int
+  serviceId  Int
+  scheduleId Int
+  bookedDate DateTime
+  // Otros campos relevantes para la reserva
 }
