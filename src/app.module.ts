@@ -4,6 +4,7 @@ import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { join } from 'path';
 import { ServicesModule } from './services/services.module';
+import { ProfessionalModule } from './professional/professional.module';
 
 @Module({
   imports: [UserModule,GraphQLModule.forRoot<ApolloDriverConfig>({
@@ -13,7 +14,7 @@ import { ServicesModule } from './services/services.module';
     definitions: {
       path: join(process.cwd(), 'src/graphql.ts'),
     },
-  }), ServicesModule,],
+  }), ServicesModule, ProfessionalModule,],
   controllers: [],
   providers: [],
 })
