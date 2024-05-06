@@ -4,27 +4,26 @@ type User {
   email: String!
   services: [Service!]!
   rol: String!
-  # Añade otros campos según tu modelo de usuario
+  professional: Professional
 }
 
 input CreateUserInput {
   name: String!
   email: String!
   rol: String!
-  # Añade otros campos necesarios para la creación de usuario
 }
 
 input UpdateUserInput {
   name: String
   email: String
   rol: String!
-  # Añade otros campos necesarios para la actualización de usuario
 }
 
 type Query {
   user(id: Int!): User
   users: [User]
   userServices(userId: Int!): [Service!]!
+  professional: Professional
 }
 
 type Mutation {

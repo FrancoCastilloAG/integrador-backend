@@ -29,9 +29,9 @@ export class UserService {
     });
   }
 
-  async findOne(userId: string): Promise<User> {
+  async findOne(userId: number): Promise<User> {
     const user = await this.prisma.user.findUnique({
-      where: { id: parseInt(userId) },
+      where: { id: userId },
     });
     if (!user) {
       throw new NotFoundException(`User with ID ${userId} not found`);

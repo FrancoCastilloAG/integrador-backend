@@ -57,13 +57,14 @@ export interface Professional {
     lastName: string;
     phone: string;
     userId: number;
-    User?: Nullable<User>;
+    userOfProfessional?: Nullable<User>;
     services: Service[];
 }
 
 export interface IQuery {
     professionals(): Nullable<Professional>[] | Promise<Nullable<Professional>[]>;
     professional(id: number): Nullable<Professional> | Promise<Nullable<Professional>>;
+    getUser(): Nullable<User> | Promise<Nullable<User>>;
     services(): Service[] | Promise<Service[]>;
     service(id: number): Nullable<Service> | Promise<Nullable<Service>>;
     user(id: number): Nullable<User> | Promise<Nullable<User>>;
@@ -98,6 +99,7 @@ export interface User {
     email: string;
     services: Service[];
     rol: string;
+    professional?: Nullable<Professional>;
 }
 
 type Nullable<T> = T | null;

@@ -1,11 +1,23 @@
-import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
+import {
+  Resolver,
+  Query,
+  Mutation,
+  Args,
+  Parent,
+  ResolveField,
+} from '@nestjs/graphql';
 import { ProfessionalService } from './professional.service';
 import { CreateProfessionalInput } from './dto/create-professional.input';
 import { UpdateProfessionalInput } from './dto/update-professional.input';
+import { User } from 'src/graphql';
+import { UserService } from 'src/user/user.service';
 
 @Resolver('Professional')
 export class ProfessionalResolver {
-  constructor(private readonly professionalService: ProfessionalService) {}
+  constructor(
+    private readonly professionalService: ProfessionalService,
+    private readonly userService: UserService,
+  ) {}
 
   @Mutation('createProfessional')
   create(
@@ -37,5 +49,10 @@ export class ProfessionalResolver {
   @Mutation('removeProfessional')
   remove(@Args('id') id: number) {
     return this.professionalService.remove(id);
+  }
+
+  @ResolveField('userOfProfessional')
+  async getUser(@Parent() user: User) {
+    return await this.userService.findOne(user.id);
   }
 }

@@ -18,13 +18,21 @@ export class AuthService {
     private readonly jwtService: JwtService,
   ) {}
   async register(userDto: CreateUserInput) {
-    const user = await this.usersService.findByEmail(userDto.email);
+    try {
+      const user = await this.usersService.findByEmail(userDto.email);
 
-    if (user) {
+      if (!user) {
+        return await this.usersService.create(userDto);
+      }
+
       throw new BadRequestException('User already exists');
+    } catch (error) {
+      return {
+        statusCode: 400,
+        message: error.message,
+        success: false,
+      };
     }
-
-    return await this.usersService.create(userDto);
   }
 
   async login({ email, password }: LoginDto) {
@@ -48,15 +56,10 @@ export class AuthService {
         sub: user.id,
       });
 
-      const refreshToken = await this.jwtService.signAsync(
-        {
-          randomNumber: Math.random(),
-          randomDate: new Date(),
-        },
-        {
-          secret: process.env.JWT_REFRESH_SECRET,
-        },
-      );
+      const refreshToken = await this.jwtService.signAsync({
+        email: user.email,
+        sub: user.id,
+      });
 
       const response = {
         statusCode: 200,

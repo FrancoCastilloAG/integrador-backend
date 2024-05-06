@@ -1,9 +1,17 @@
 import { Module } from '@nestjs/common';
-import { ProfessionalService } from './professional.service';
-import { ProfessionalResolver } from './professional.resolver';
 import { PrismaService } from 'src/prisma.service';
+import { UserService } from 'src/user/user.service';
+import { ProfessionalResolver } from './professional.resolver';
+import { ProfessionalService } from './professional.service';
 
 @Module({
-  providers: [ProfessionalResolver, ProfessionalService, PrismaService],
+  imports: [],
+  providers: [
+    ProfessionalResolver,
+    ProfessionalService,
+    PrismaService,
+    UserService,
+  ],
+  exports: [ProfessionalService],
 })
 export class ProfessionalModule {}
