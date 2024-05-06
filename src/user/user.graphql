@@ -24,10 +24,10 @@ input UpdateUserInput {
 type Query {
   user(id: Int!): User
   users: [User]
-  userServices(userId: Int!): [Service!]! 
+  userServices(userId: Int!): [Service!]!
 }
 
 type Mutation {
   createUser(createUserInput: CreateUserInput!): User
-  updateUser(id: ID!, updateUserInput: UpdateUserInput!): User
+  updateUser(id: Int!, updateUserInput: UpdateUserInput!): User
 }

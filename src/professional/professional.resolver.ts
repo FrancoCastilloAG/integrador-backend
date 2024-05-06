@@ -8,11 +8,14 @@ export class ProfessionalResolver {
   constructor(private readonly professionalService: ProfessionalService) {}
 
   @Mutation('createProfessional')
-  create(@Args('createProfessionalInput') createProfessionalInput: CreateProfessionalInput) {
+  create(
+    @Args('createProfessionalInput')
+    createProfessionalInput: CreateProfessionalInput,
+  ) {
     return this.professionalService.create(createProfessionalInput);
   }
 
-  @Query('professional')
+  @Query('professionals')
   findAll() {
     return this.professionalService.findAll();
   }
@@ -23,8 +26,12 @@ export class ProfessionalResolver {
   }
 
   @Mutation('updateProfessional')
-  update(@Args('updateProfessionalInput') updateProfessionalInput: UpdateProfessionalInput) {
-    return this.professionalService.update(updateProfessionalInput.id, updateProfessionalInput);
+  update(
+    @Args('updateProfessionalInput')
+    updateProfessionalInput: UpdateProfessionalInput,
+    @Args('id') id: number,
+  ) {
+    return this.professionalService.update(id, updateProfessionalInput);
   }
 
   @Mutation('removeProfessional')

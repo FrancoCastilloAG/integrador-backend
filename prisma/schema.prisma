@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -14,33 +8,63 @@ datasource db {
 }
 
 model User {
-  id       Int       @id @default(autoincrement())
-  email    String    @unique
-  name     String
-  rol      String
-  services Service[]
-  orders   Order[]   // New field to represent orders made by this user
+  id             Int           @id @default(autoincrement())
+  email          String        @unique
+  userName       String
+  password       String
+  professionalId Int?          @unique
+  professional   Professional? @relation(fields: [professionalId], references: [id])
+  // bookings       Booking[]
+}
+
+model Professional {
+  id        Int       @id @default(autoincrement())
+  name      String
+  lastName  String
+  phone     String
+  userId    Int       @unique
+  User      User?
+  services  Service[]
+  // bookings  Booking[]
 }
 
 model Service {
-  id          Int        @id @default(autoincrement())
-  title       String
-  description String
-  photos      String[]
-  contact     String
-  category    String
-  user        User       @relation(fields: [userId], references: [id])
-  userId      Int
-  orders      Order[]    // New field to represent orders associated with this service
+  id             Int           @id @default(autoincrement())
+  title          String
+  description    String
+  photos         String[]
+  category       String
+  professionalId Int?
+  professional   Professional? @relation(fields: [professionalId], references: [id])
+  // bookings       Booking[]
 }
 
-model Order {
-  id         Int      @id @default(autoincrement())
-  service    Service  @relation(fields: [serviceId], references: [id])
-  serviceId  Int
-  user       User     @relation(fields: [userId], references: [id])
-  userId     Int
-  createdAt  DateTime @default(now())
-  // Add more fields as needed, such as payment details, status, etc.
-}
+// model Booking {
+//   id                 Int                 @id @default(autoincrement())
+//   date               DateTime
+//   userId             Int                 @unique
+//   user               User                @relation(fields: [userId], references: [id])
+//   isActive           Boolean
+//   serviceId          Int                 @unique
+//   service            Service             @relation(fields: [serviceId], references: [id])
+//   professionalId     Int                 @unique
+//   professional       Professional        @relation(fields: [professionalId], references: [id])
+//   professionalReview ProfessionalReview?
+//   serviceReview      ServiceReview?
+// }
 
+// model ProfessionalReview {
+//   id        String   @id @default(cuid())
+//   rating    Int
+//   comment   String
+//   bookingId Int      @unique
+//   booking   Booking  @relation(fields: [bookingId], references: [id])
+// }
+
+// model ServiceReview {
+//   id        String   @id @default(cuid())
+//   rating    Int
+//   comment   String
+//   bookingId Int      @unique
+//   booking   Booking  @relation(fields: [bookingId], references: [id])
+// }

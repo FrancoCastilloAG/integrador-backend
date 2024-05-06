@@ -1,24 +1,49 @@
+# model Professional {
+#   id        Int       @id @default(autoincrement())
+#   name      String
+#   lastName  String
+#   phone     String
+#   userId    Int       @unique
+#   User      User?
+#   services  Service[]
+#   bookings  Booking[]
+# }
+
 type Professional {
-  # Example field (placeholder)
-  exampleField: Int
+  id: Int!
+  name: String!
+  lastName: String!
+  phone: String!
+  userId: Int!
+  User: User
+  services: [Service!]!
 }
 
 input CreateProfessionalInput {
-  # Example field (placeholder)
-  exampleField: Int
+  name: String!
+  lastName: String!
+  phone: String!
+  userId: Int!
 }
 
 input UpdateProfessionalInput {
-  id: Int!
+  name: String
+  lastName: String
+  phone: String
 }
 
 type Query {
-  professional: [Professional]!
+  professionals: [Professional]!
   professional(id: Int!): Professional
 }
 
 type Mutation {
-  createProfessional(createProfessionalInput: CreateProfessionalInput!): Professional!
-  updateProfessional(updateProfessionalInput: UpdateProfessionalInput!): Professional!
+  createProfessional(
+    createProfessionalInput: CreateProfessionalInput!
+  ): Professional!
+  updateProfessional(
+    id: Int!
+    updateProfessionalInput: UpdateProfessionalInput!
+  ): Professional!
   removeProfessional(id: Int!): Professional
 }
