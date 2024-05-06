@@ -4,17 +4,23 @@ import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { join } from 'path';
 import { ServicesModule } from './services/services.module';
+import { ProfessionalModule } from './professional/professional.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
-  imports: [UserModule,GraphQLModule.forRoot<ApolloDriverConfig>({
-    driver: ApolloDriver,
-    playground: true,
-    typePaths: ['./**/*.graphql'],
-    definitions: {
-      path: join(process.cwd(), 'src/graphql.ts'),
-    },
-  }), ServicesModule,],
-  controllers: [],
-  providers: [],
+  imports: [
+    UserModule,
+    GraphQLModule.forRoot<ApolloDriverConfig>({
+      driver: ApolloDriver,
+      playground: true,
+      typePaths: ['./**/*.graphql'],
+      definitions: {
+        path: join(process.cwd(), 'src/graphql.ts'),
+      },
+    }),
+    ServicesModule,
+    ProfessionalModule,
+    AuthModule,
+  ],
 })
 export class AppModule {}
