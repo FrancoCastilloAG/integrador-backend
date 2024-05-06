@@ -1,0 +1,39 @@
+type Query {
+  services: [Service!]!
+  service(id: Int!): Service
+}
+
+type Mutation {
+  createService(data: CreateServiceInput!): Service!
+  updateService(id: Int!, data: UpdateServiceInput!): Service!
+  deleteService(id: Int!): Service
+}
+
+type Service {
+  id: Int!
+  title: String!
+  description: String!
+  photos: [String!]!
+  contact: String!
+  category: String!
+  userId: Int!
+}
+
+input CreateServiceInput {
+  title: String!
+  description: String!
+  photos: [String!]!
+  contact: String!
+  category: String!
+  userId: Int!
+}
+
+input UpdateServiceInput {
+  title: String
+  description: String
+  photos: [String!]
+  contact: String
+  category: String
+  userId: Int
+}
+
