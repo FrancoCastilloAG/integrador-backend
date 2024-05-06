@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '../prisma.service';
-import { Prisma, PrismaClient, User } from '@prisma/client';
+import { User } from '@prisma/client';
 import { CreateUserInput } from './dto/create-user.dto';
 import { UpdateUserInput } from './dto/update-user.dto'; // Asumiendo que tienes un DTO similar para actualizar
 

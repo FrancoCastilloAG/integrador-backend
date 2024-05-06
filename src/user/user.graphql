@@ -2,6 +2,7 @@ type User {
   id: Int!
   name: String!
   email: String!
+  password: String!
   services: [Service!]!
   rol: String!
   # Añade otros campos según tu modelo de usuario

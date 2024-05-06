@@ -27,5 +27,4 @@ export class UserResolver {
   async update(@Args('id') id: string, @Args('updateUserInput') updateUserInput: UpdateUserInput): Promise<User> {
     return this.userService.update(id, updateUserInput);
   }
-  
 }
