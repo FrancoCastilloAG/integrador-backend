@@ -8,6 +8,14 @@
 /* tslint:disable */
 /* eslint-disable */
 
+export interface CreateBookingInput {
+    exampleField?: Nullable<number>;
+}
+
+export interface UpdateBookingInput {
+    id: number;
+}
+
 export interface CreateProfessionalInput {
     name: string;
     lastName: string;
@@ -40,28 +48,23 @@ export interface UpdateServiceInput {
 }
 
 export interface CreateUserInput {
-    name: string;
+    userName: string;
     email: string;
-    rol: string;
+    password: string;
 }
 
 export interface UpdateUserInput {
-    name?: Nullable<string>;
+    userName?: Nullable<string>;
     email?: Nullable<string>;
-    rol: string;
 }
 
-export interface Professional {
-    id: number;
-    name: string;
-    lastName: string;
-    phone: string;
-    userId: number;
-    userOfProfessional?: Nullable<User>;
-    services: Service[];
+export interface Booking {
+    exampleField?: Nullable<number>;
 }
 
 export interface IQuery {
+    bookings(): Nullable<Booking>[] | Promise<Nullable<Booking>[]>;
+    booking(id: number): Nullable<Booking> | Promise<Nullable<Booking>>;
     professionals(): Nullable<Professional>[] | Promise<Nullable<Professional>[]>;
     professional(id: number): Nullable<Professional> | Promise<Nullable<Professional>>;
     getUser(): Nullable<User> | Promise<Nullable<User>>;
@@ -73,6 +76,9 @@ export interface IQuery {
 }
 
 export interface IMutation {
+    createBooking(createBookingInput: CreateBookingInput): Booking | Promise<Booking>;
+    updateBooking(updateBookingInput: UpdateBookingInput): Booking | Promise<Booking>;
+    removeBooking(id: number): Nullable<Booking> | Promise<Nullable<Booking>>;
     createProfessional(createProfessionalInput: CreateProfessionalInput): Professional | Promise<Professional>;
     updateProfessional(id: number, updateProfessionalInput: UpdateProfessionalInput): Professional | Promise<Professional>;
     removeProfessional(id: number): Nullable<Professional> | Promise<Nullable<Professional>>;
@@ -81,6 +87,16 @@ export interface IMutation {
     deleteService(id: number): Nullable<Service> | Promise<Nullable<Service>>;
     createUser(createUserInput: CreateUserInput): Nullable<User> | Promise<Nullable<User>>;
     updateUser(id: number, updateUserInput: UpdateUserInput): Nullable<User> | Promise<Nullable<User>>;
+}
+
+export interface Professional {
+    id: number;
+    name: string;
+    lastName: string;
+    phone: string;
+    userId: number;
+    userOfProfessional?: Nullable<User>;
+    services: Service[];
 }
 
 export interface Service {
@@ -95,10 +111,10 @@ export interface Service {
 
 export interface User {
     id: number;
-    name: string;
+    userName: string;
     email: string;
     services: Service[];
-    rol: string;
+    password: string;
     professional?: Nullable<Professional>;
 }
 

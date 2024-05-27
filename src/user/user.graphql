@@ -1,22 +1,21 @@
 type User {
   id: Int!
-  name: String!
+  userName: String!
   email: String!
   services: [Service!]!
-  rol: String!
+  password: String!
   professional: Professional
 }
 
 input CreateUserInput {
-  name: String!
+  userName: String!
   email: String!
-  rol: String!
+  password: String!
 }
 
 input UpdateUserInput {
-  name: String
+  userName: String
   email: String
-  rol: String!
 }
 
 type Query {

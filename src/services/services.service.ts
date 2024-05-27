@@ -1,5 +1,5 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { PrismaService } from 'src/prisma.service'; // Asegúrate de importar tu servicio de Prisma
+import { PrismaService } from 'src/prisma/prisma.service'; // Asegúrate de importar tu servicio de Prisma
 import { CreateServiceInput } from './dto/create-service.dto';
 import { UpdateServiceInput } from './dto/update-service.dto';
 
@@ -32,5 +32,4 @@ export class ServiceService {
     const service = await this.findServiceById(id);
     return this.prisma.service.delete({ where: { id } });
   }
-
 }

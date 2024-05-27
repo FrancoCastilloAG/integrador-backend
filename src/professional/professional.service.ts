@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { CreateProfessionalInput } from './dto/create-professional.input';
 import { UpdateProfessionalInput } from './dto/update-professional.input';
-import { PrismaService } from 'src/prisma.service';
+import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
 export class ProfessionalService {
