@@ -2,6 +2,7 @@ type User {
   id: Int!
   userName: String!
   email: String!
+  password: String!
   services: [Service!]!
   password: String!
   professional: Professional

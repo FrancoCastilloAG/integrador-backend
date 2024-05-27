@@ -36,7 +36,6 @@ export class UserResolver {
   ): Promise<User> {
     return this.userService.update(id, updateUserInput);
   }
-
   @ResolveField('professional')
   async getProfessional(@Args('id') id: number) {
     return this.professionalService.findOne(id);
