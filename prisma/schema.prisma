@@ -10,22 +10,21 @@ datasource db {
 model User {
   id             Int           @id @default(autoincrement())
   email          String        @unique
-  userName       String
+  name           String
   password       String
+  rol            String
   professionalId Int?          @unique
   professional   Professional? @relation(fields: [professionalId], references: [id])
-  // bookings       Booking[]
 }
 
 model Professional {
-  id        Int       @id @default(autoincrement())
-  name      String
-  lastName  String
-  phone     String
-  userId    Int       @unique
-  User      User?
-  services  Service[]
-  // bookings  Booking[]
+  id       Int       @id @default(autoincrement())
+  name     String
+  lastName String
+  phone    String
+  userId   Int       @unique
+  user     User?
+  services Service[]
 }
 
 model Service {
@@ -34,9 +33,9 @@ model Service {
   description    String
   photos         String[]
   category       String
+  contact        String
   professionalId Int?
   professional   Professional? @relation(fields: [professionalId], references: [id])
-  // bookings       Booking[]
 }
 
 // model Booking {

@@ -1,84 +1,30 @@
 import { Injectable } from '@nestjs/common';
-import { CreateProfessionalInput } from './dto/create-professional.input';
-import { UpdateProfessionalInput } from './dto/update-professional.input';
+import { Professional } from '@prisma/client';
 import { PrismaService } from 'src/prisma.service';
 
 @Injectable()
 export class ProfessionalService {
   constructor(private readonly prisma: PrismaService) {}
 
-  async create(createProfessionalInput: CreateProfessionalInput) {
-    try {
-      return await this.prisma.professional.create({
-        data: createProfessionalInput,
-      });
-    } catch (error) {
-      return error;
-    }
+  async createProfessional(data: Professional): Promise<Professional> {
+    return this.prisma.professional.create({ data });
   }
 
-  async findAll() {
-    try {
-      return await this.prisma.professional.findMany();
-    } catch (error) {
-      return error;
-    }
+  async getProfessionalById(id: number): Promise<Professional> {
+    const professionalWithServices = await this.prisma.professional.findUnique({
+      where: { id: id },
+      include: { user: true, services: true },
+    });
+    return professionalWithServices;
+  }
+  async updateProfessional(
+    id: number,
+    data: Partial<Professional>,
+  ): Promise<Professional> {
+    return this.prisma.professional.update({ where: { id }, data });
   }
 
-  async findOne(id: number) {
-    try {
-      return await this.prisma.professional.findUnique({
-        where: {
-          id: id,
-        },
-      });
-    } catch (error) {
-      return error;
-    }
-  }
-
-  async update(id: number, updateProfessionalInput: UpdateProfessionalInput) {
-    try {
-      const existantUser = await this.prisma.professional.findUnique({
-        where: {
-          id: id,
-        },
-      });
-
-      if (!existantUser) {
-        return `Professional with id ${id} not found`;
-      }
-
-      return await this.prisma.professional.update({
-        where: {
-          id: id,
-        },
-        data: updateProfessionalInput,
-      });
-    } catch (error) {
-      return error;
-    }
-  }
-
-  async remove(id: number) {
-    try {
-      const existantUser = await this.prisma.professional.findUnique({
-        where: {
-          id: id,
-        },
-      });
-
-      if (!existantUser) {
-        return `Professional with id ${id} not found`;
-      }
-
-      return await this.prisma.professional.delete({
-        where: {
-          id: id,
-        },
-      });
-    } catch (error) {
-      return error;
-    }
+  async deleteProfessional(id: number): Promise<Professional> {
+    return this.prisma.professional.delete({ where: { id } });
   }
 }

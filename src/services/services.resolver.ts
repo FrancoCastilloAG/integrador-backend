@@ -1,39 +1,37 @@
 import { Resolver, Query, Mutation, Args, ID } from '@nestjs/graphql';
 import { ServiceService } from './services.service';
 import { Service } from '@prisma/client';
-import { CreateServiceInput } from './dto/create-service.dto';
-import { UpdateServiceInput } from './dto/update-service.dto';
-
 
 @Resolver('Service')
 export class ServiceResolver {
   constructor(private readonly serviceService: ServiceService) {}
-
-  @Query('services')
-  async getServices() {
-    return this.serviceService.findAllServices();
+  @Query('getAllServices')
+  async getAllServices(): Promise<Service[]> {
+    return this.serviceService.getAllServices();
   }
 
-  @Query('service')
-  async getServiceById(@Args('id') id: number) {
-    return this.serviceService.findServiceById(id);
+  @Query('getServicesByProfessionalId')
+  async getServicesByProfessionalId(
+    @Args('id') id: number,
+  ): Promise<Service[]> {
+    return this.serviceService.getServicesByProfessionalId(id);
   }
 
   @Mutation('createService')
-  async createService(@Args('data') data: CreateServiceInput) {
+  async createService(@Args('data') data: Service): Promise<Service> {
     return this.serviceService.createService(data);
+  }
+
+  @Mutation('deleteService')
+  async deleteService(@Args('id') id: number): Promise<Service> {
+    return this.serviceService.deleteService(id);
   }
 
   @Mutation('updateService')
   async updateService(
     @Args('id') id: number,
-    @Args('data') data: UpdateServiceInput,
-  ) {
+    @Args('data') data: Partial<Service>,
+  ): Promise<Service> {
     return this.serviceService.updateService(id, data);
-  }
-
-  @Mutation('deleteService')
-  async deleteService(@Args('id') id: number) {
-    return this.serviceService.deleteService(id);
   }
 }

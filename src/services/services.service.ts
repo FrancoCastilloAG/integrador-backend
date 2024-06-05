@@ -1,36 +1,31 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
+import { Service } from '@prisma/client';
 import { PrismaService } from 'src/prisma.service'; // Asegúrate de importar tu servicio de Prisma
-import { CreateServiceInput } from './dto/create-service.dto';
-import { UpdateServiceInput } from './dto/update-service.dto';
 
 @Injectable()
 export class ServiceService {
   constructor(private readonly prisma: PrismaService) {}
 
-  async createService(createServiceInput: CreateServiceInput) {
-    return this.prisma.service.create({ data: createServiceInput });
+  async createService(data: Service): Promise<Service> {
+    return this.prisma.service.create({ data });
   }
 
-  async findAllServices() {
+  async getAllServices(): Promise<Service[]> {
     return this.prisma.service.findMany();
   }
 
-  async findServiceById(id: number) {
-    const service = await this.prisma.service.findUnique({ where: { id } });
-    if (!service) {
-      throw new NotFoundException(`Service with ID ${id} not found`);
-    }
-    return service;
+  async getServicesByProfessionalId(id: number): Promise<Service[]> {
+    const services = await this.prisma.service.findMany({
+      where: {
+        professionalId: id,
+      },
+    });
+    return services;
   }
-
-  async updateService(id: number, data: UpdateServiceInput) {
-    const service = await this.findServiceById(id);
-    return this.prisma.service.update({ where: { id }, data });
-  }
-
-  async deleteService(id: number) {
-    const service = await this.findServiceById(id);
+  async deleteService(id: number): Promise<Service> {
     return this.prisma.service.delete({ where: { id } });
   }
-
+  async updateService(id: number, data: Partial<Service>): Promise<Service> {
+    return this.prisma.service.update({ where: { id }, data });
+  }
 }

@@ -1,21 +1,10 @@
-# model Professional {
-#   id        Int       @id @default(autoincrement())
-#   name      String
-#   lastName  String
-#   phone     String
-#   userId    Int       @unique
-#   User      User?
-#   services  Service[]
-#   bookings  Booking[]
-# }
-
 type Professional {
   id: Int!
   name: String!
   lastName: String!
   phone: String!
   userId: Int!
-  userOfProfessional: User
+  user: User
   services: [Service!]!
 }
 
@@ -33,18 +22,11 @@ input UpdateProfessionalInput {
 }
 
 type Query {
-  professionals: [Professional]!
-  professional(id: Int!): Professional
-  getUser: User
+  getProfessionalById(id: Int!): Professional
 }
 
 type Mutation {
-  createProfessional(
-    createProfessionalInput: CreateProfessionalInput!
-  ): Professional!
-  updateProfessional(
-    id: Int!
-    updateProfessionalInput: UpdateProfessionalInput!
-  ): Professional!
-  removeProfessional(id: Int!): Professional
+  createProfessional(createProfessional: CreateProfessionalInput!): Professional
+  updateProfessional(id: Int!, data: UpdateProfessionalInput!): Professional
+  deleteProfessional(id: Int!): Professional
 }

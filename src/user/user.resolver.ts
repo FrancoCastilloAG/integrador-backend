@@ -1,43 +1,53 @@
 import { ProfessionalService } from './../professional/professional.service';
-import { Resolver, Query, Args, Mutation, ResolveField } from '@nestjs/graphql';
+import {
+  Resolver,
+  Query,
+  Args,
+  Mutation,
+  ResolveField,
+  Parent,
+} from '@nestjs/graphql';
 import { UserService } from './user.service';
 import { User } from '@prisma/client';
-import { CreateUserInput } from './dto/create-user.dto';
-import { UpdateUserInput } from './dto/update-user.dto';
+import { Professional } from 'src/graphql';
 
 @Resolver('User')
 export class UserResolver {
   constructor(
     private readonly userService: UserService,
-    private readonly professionalService: ProfessionalService,
   ) {}
 
-  @Query('user')
-  async findOne(@Args('id') id: number): Promise<User> {
-    return this.userService.findOne(id);
-  }
-
-  @Query('users')
-  async findAll(): Promise<User[]> {
-    return this.userService.findAll();
-  }
-
   @Mutation('createUser')
-  async create(
-    @Args('createUserInput') createUserInput: CreateUserInput,
-  ): Promise<User> {
-    return this.userService.create(createUserInput);
+  async createUser(@Args('createUserInput') data: User): Promise<User> {
+    if (!data) {
+      throw new Error('Data is missing');
+    }
+    console.log("resolver data user:",data)
+    return this.userService.createUser(data);
+  }
+
+  @Query('getUserById')
+  async getUserById(
+    @Args('id') id: number,
+  ): Promise<User | null> {
+    return this.userService.getUserById(id);
+  }
+
+  @Query('getUsers')
+  async getAllUsers(): Promise<User[]> {
+    return this.userService.getAllUsers();
   }
 
   @Mutation('updateUser')
-  async update(
-    @Args('id') id: string,
-    @Args('updateUserInput') updateUserInput: UpdateUserInput,
+  async updateUser(
+    @Args('id') id: number,
+    @Args('data') data: Partial<User>,
   ): Promise<User> {
-    return this.userService.update(id, updateUserInput);
+    return this.userService.updateUser(id, data);
   }
-  @ResolveField('professional')
-  async getProfessional(@Args('id') id: number) {
-    return this.professionalService.findOne(id);
+
+  @Mutation('deleteUser')
+  async deleteUser(@Args('id') id: number): Promise<User> {
+    return this.userService.deleteUser(id);
   }
 }

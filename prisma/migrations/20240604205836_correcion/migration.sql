@@ -2,8 +2,9 @@
 CREATE TABLE "User" (
     "id" SERIAL NOT NULL,
     "email" TEXT NOT NULL,
-    "userName" TEXT NOT NULL,
+    "name" TEXT NOT NULL,
     "password" TEXT NOT NULL,
+    "rol" TEXT NOT NULL,
     "professionalId" INTEGER,
 
     CONSTRAINT "User_pkey" PRIMARY KEY ("id")
@@ -27,6 +28,7 @@ CREATE TABLE "Service" (
     "description" TEXT NOT NULL,
     "photos" TEXT[],
     "category" TEXT NOT NULL,
+    "contact" TEXT NOT NULL,
     "professionalId" INTEGER,
 
     CONSTRAINT "Service_pkey" PRIMARY KEY ("id")

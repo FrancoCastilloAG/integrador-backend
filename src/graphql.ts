@@ -27,7 +27,7 @@ export interface CreateServiceInput {
     photos: string[];
     contact: string;
     category: string;
-    userId: number;
+    professionalId: number;
 }
 
 export interface UpdateServiceInput {
@@ -36,13 +36,14 @@ export interface UpdateServiceInput {
     photos?: Nullable<string[]>;
     contact?: Nullable<string>;
     category?: Nullable<string>;
-    userId?: Nullable<number>;
+    professionalId?: Nullable<number>;
 }
 
 export interface CreateUserInput {
     name: string;
     email: string;
     rol: string;
+    password: string;
 }
 
 export interface UpdateUserInput {
@@ -57,30 +58,28 @@ export interface Professional {
     lastName: string;
     phone: string;
     userId: number;
-    userOfProfessional?: Nullable<User>;
+    user?: Nullable<User>;
     services: Service[];
 }
 
 export interface IQuery {
-    professionals(): Nullable<Professional>[] | Promise<Nullable<Professional>[]>;
-    professional(id: number): Nullable<Professional> | Promise<Nullable<Professional>>;
-    getUser(): Nullable<User> | Promise<Nullable<User>>;
-    services(): Service[] | Promise<Service[]>;
-    service(id: number): Nullable<Service> | Promise<Nullable<Service>>;
-    user(id: number): Nullable<User> | Promise<Nullable<User>>;
-    users(): Nullable<Nullable<User>[]> | Promise<Nullable<Nullable<User>[]>>;
-    userServices(userId: number): Service[] | Promise<Service[]>;
+    getProfessionalById(id: number): Nullable<Professional> | Promise<Nullable<Professional>>;
+    getAllServices(): Service[] | Promise<Service[]>;
+    getServicesByProfessionalId(id: number): Service[] | Promise<Service[]>;
+    getUserById(id: number): Nullable<User> | Promise<Nullable<User>>;
+    getUsers(): User[] | Promise<User[]>;
 }
 
 export interface IMutation {
-    createProfessional(createProfessionalInput: CreateProfessionalInput): Professional | Promise<Professional>;
-    updateProfessional(id: number, updateProfessionalInput: UpdateProfessionalInput): Professional | Promise<Professional>;
-    removeProfessional(id: number): Nullable<Professional> | Promise<Nullable<Professional>>;
+    createProfessional(createProfessional: CreateProfessionalInput): Nullable<Professional> | Promise<Nullable<Professional>>;
+    updateProfessional(id: number, data: UpdateProfessionalInput): Nullable<Professional> | Promise<Nullable<Professional>>;
+    deleteProfessional(id: number): Nullable<Professional> | Promise<Nullable<Professional>>;
     createService(data: CreateServiceInput): Service | Promise<Service>;
+    deleteService(id: number): Service | Promise<Service>;
     updateService(id: number, data: UpdateServiceInput): Service | Promise<Service>;
-    deleteService(id: number): Nullable<Service> | Promise<Nullable<Service>>;
     createUser(createUserInput: CreateUserInput): Nullable<User> | Promise<Nullable<User>>;
     updateUser(id: number, updateUserInput: UpdateUserInput): Nullable<User> | Promise<Nullable<User>>;
+    deleteUser(id: number): User | Promise<User>;
 }
 
 export interface Service {
@@ -90,13 +89,14 @@ export interface Service {
     photos: string[];
     contact: string;
     category: string;
-    userId: number;
+    professionalId: number;
 }
 
 export interface User {
     id: number;
     name: string;
     email: string;
+    password: string;
     services: Service[];
     rol: string;
     professional?: Nullable<Professional>;
