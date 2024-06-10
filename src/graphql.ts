@@ -8,6 +8,30 @@
 /* tslint:disable */
 /* eslint-disable */
 
+export interface RegisterInput {
+    name: string;
+    email: string;
+    password: string;
+}
+
+export interface LoginInput {
+    email: string;
+    password: string;
+}
+
+export interface CreateBookingInput {
+    userId: number;
+    IsActive: boolean;
+    ServiceId: number;
+    professionalId: number;
+}
+
+export interface CreateProfessionalReviewInput {
+    rating: number;
+    comment: string;
+    bookingId: number;
+}
+
 export interface CreateProfessionalInput {
     name: string;
     lastName: string;
@@ -19,6 +43,12 @@ export interface UpdateProfessionalInput {
     name?: Nullable<string>;
     lastName?: Nullable<string>;
     phone?: Nullable<string>;
+}
+
+export interface CreateServiceReviewInput {
+    rating: number;
+    comment: string;
+    bookingId: number;
 }
 
 export interface CreateServiceInput {
@@ -52,6 +82,47 @@ export interface UpdateUserInput {
     rol: string;
 }
 
+export interface IMutation {
+    register(registerInput: RegisterInput): User | Promise<User>;
+    login(loginInput: LoginInput): AuthPayload | Promise<AuthPayload>;
+    createBooking(createBookingInput: CreateBookingInput): Booking | Promise<Booking>;
+    createProfessionalReview(createProfessionalReviewInput: CreateProfessionalReviewInput): ProfessionalReview | Promise<ProfessionalReview>;
+    createProfessional(createProfessional: CreateProfessionalInput): Nullable<Professional> | Promise<Nullable<Professional>>;
+    updateProfessional(id: number, data: UpdateProfessionalInput): Nullable<Professional> | Promise<Nullable<Professional>>;
+    deleteProfessional(id: number): Nullable<Professional> | Promise<Nullable<Professional>>;
+    createServiceReview(createServiceReviewInput: CreateServiceReviewInput): ServiceReview | Promise<ServiceReview>;
+    createService(data: CreateServiceInput): Service | Promise<Service>;
+    deleteService(id: number): Service | Promise<Service>;
+    updateService(id: number, data: UpdateServiceInput): Service | Promise<Service>;
+    createUser(createUserInput: CreateUserInput): Nullable<User> | Promise<Nullable<User>>;
+    updateUser(id: number, updateUserInput: UpdateUserInput): Nullable<User> | Promise<Nullable<User>>;
+    deleteUser(id: number): User | Promise<User>;
+}
+
+export interface AuthPayload {
+    token: string;
+}
+
+export interface Booking {
+    id: number;
+    userId: number;
+    user?: Nullable<User>;
+    IsActive: boolean;
+    ServiceId: number;
+    professionalId: number;
+    professional?: Nullable<Professional>;
+    professionalReview?: Nullable<ProfessionalReview>;
+    serviceReview?: Nullable<ServiceReview>;
+}
+
+export interface ProfessionalReview {
+    id: number;
+    rating: number;
+    comment: string;
+    bookingId: number;
+    booking: Booking[];
+}
+
 export interface Professional {
     id: number;
     name: string;
@@ -70,16 +141,12 @@ export interface IQuery {
     getUsers(): User[] | Promise<User[]>;
 }
 
-export interface IMutation {
-    createProfessional(createProfessional: CreateProfessionalInput): Nullable<Professional> | Promise<Nullable<Professional>>;
-    updateProfessional(id: number, data: UpdateProfessionalInput): Nullable<Professional> | Promise<Nullable<Professional>>;
-    deleteProfessional(id: number): Nullable<Professional> | Promise<Nullable<Professional>>;
-    createService(data: CreateServiceInput): Service | Promise<Service>;
-    deleteService(id: number): Service | Promise<Service>;
-    updateService(id: number, data: UpdateServiceInput): Service | Promise<Service>;
-    createUser(createUserInput: CreateUserInput): Nullable<User> | Promise<Nullable<User>>;
-    updateUser(id: number, updateUserInput: UpdateUserInput): Nullable<User> | Promise<Nullable<User>>;
-    deleteUser(id: number): User | Promise<User>;
+export interface ServiceReview {
+    id: number;
+    rating: number;
+    comment: string;
+    bookingId: number;
+    booking: Booking[];
 }
 
 export interface Service {
@@ -100,6 +167,7 @@ export interface User {
     services: Service[];
     rol: string;
     professional?: Nullable<Professional>;
+    booking: Booking[];
 }
 
 type Nullable<T> = T | null;

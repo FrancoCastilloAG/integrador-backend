@@ -13,23 +13,19 @@ import { Professional } from 'src/graphql';
 
 @Resolver('User')
 export class UserResolver {
-  constructor(
-    private readonly userService: UserService,
-  ) {}
+  constructor(private readonly userService: UserService) {}
 
   @Mutation('createUser')
   async createUser(@Args('createUserInput') data: User): Promise<User> {
     if (!data) {
       throw new Error('Data is missing');
     }
-    console.log("resolver data user:",data)
+    console.log('resolver data user:', data);
     return this.userService.createUser(data);
   }
 
   @Query('getUserById')
-  async getUserById(
-    @Args('id') id: number,
-  ): Promise<User | null> {
+  async getUserById(@Args('id') id: number): Promise<User | null> {
     return this.userService.getUserById(id);
   }
 

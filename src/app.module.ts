@@ -5,6 +5,11 @@ import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { join } from 'path';
 import { ServicesModule } from './services/services.module';
 import { ProfessionalModule } from './professional/professional.module';
+import { AuthModule } from './auth/auth.module';
+import { BookingModule } from './booking/booking.module';
+import { ProfessionalReviewModule } from './professional-review/professional-review.module';
+import { ServiceReviewModule } from './service-review/service-review.module';
+
 
 
 @Module({
@@ -20,6 +25,10 @@ import { ProfessionalModule } from './professional/professional.module';
     }),
     ServicesModule,
     ProfessionalModule,
+    AuthModule,
+    BookingModule,
+    ProfessionalReviewModule,
+    ServiceReviewModule,
   ],
 })
 export class AppModule {}

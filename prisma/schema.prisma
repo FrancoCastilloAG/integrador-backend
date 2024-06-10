@@ -13,6 +13,7 @@ model User {
   name           String
   password       String
   rol            String
+  booking        Booking[]
   professionalId Int?          @unique
   professional   Professional? @relation(fields: [professionalId], references: [id])
 }
@@ -25,6 +26,7 @@ model Professional {
   userId   Int       @unique
   user     User?
   services Service[]
+  booking  Booking[]
 }
 
 model Service {
@@ -34,36 +36,37 @@ model Service {
   photos         String[]
   category       String
   contact        String
+  booking        Booking[]
   professionalId Int?
   professional   Professional? @relation(fields: [professionalId], references: [id])
 }
 
-// model Booking {
-//   id                 Int                 @id @default(autoincrement())
-//   date               DateTime
-//   userId             Int                 @unique
-//   user               User                @relation(fields: [userId], references: [id])
-//   isActive           Boolean
-//   serviceId          Int                 @unique
-//   service            Service             @relation(fields: [serviceId], references: [id])
-//   professionalId     Int                 @unique
-//   professional       Professional        @relation(fields: [professionalId], references: [id])
-//   professionalReview ProfessionalReview?
-//   serviceReview      ServiceReview?
-// }
+model Booking {
+  id                 Int                 @id @default(autoincrement())
+  //date               DateTime
+  userId             Int                 @unique
+  user               User                @relation(fields: [userId], references: [id])
+  IsActive           Boolean
+  serviceId          Int                 @unique
+  service            Service             @relation(fields: [serviceId], references: [id])
+  professionalId     Int                 @unique
+  professional       Professional        @relation(fields: [professionalId], references: [id])
+  professionalReview ProfessionalReview?
+  serviceReview      ServiceReview?
+}
 
-// model ProfessionalReview {
-//   id        String   @id @default(cuid())
-//   rating    Int
-//   comment   String
-//   bookingId Int      @unique
-//   booking   Booking  @relation(fields: [bookingId], references: [id])
-// }
+model ProfessionalReview {
+  id        String  @id @default(cuid())
+  rating    Int
+  comment   String
+  bookingId Int     @unique
+  booking   Booking @relation(fields: [bookingId], references: [id])
+}
 
-// model ServiceReview {
-//   id        String   @id @default(cuid())
-//   rating    Int
-//   comment   String
-//   bookingId Int      @unique
-//   booking   Booking  @relation(fields: [bookingId], references: [id])
-// }
+model ServiceReview {
+  id        String  @id @default(cuid())
+  rating    Int
+  comment   String
+  bookingId Int     @unique
+  booking   Booking @relation(fields: [bookingId], references: [id])
+}

@@ -1,0 +1,24 @@
+
+
+type Booking {
+  id: Int!
+  userId: Int!
+  user: User
+  IsActive: Boolean!
+  ServiceId: Int!
+  professionalId: Int!
+  professional: Professional
+  professionalReview: ProfessionalReview
+  serviceReview: ServiceReview
+}
+
+input CreateBookingInput {
+  userId: Int!
+  IsActive: Boolean!
+  ServiceId: Int!
+  professionalId: Int!
+}
+
+type Mutation {
+  createBooking(createBookingInput: CreateBookingInput!): Booking!
+}

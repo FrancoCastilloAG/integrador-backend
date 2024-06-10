@@ -1,0 +1,17 @@
+type ServiceReview {
+  id: Int!
+  rating: Int!
+  comment: String!
+  bookingId: Int!
+  booking: [Booking!]!
+}
+
+input CreateServiceReviewInput {
+  rating: Int!
+  comment: String!
+  bookingId: Int!
+}
+
+type Mutation {
+  createServiceReview(createServiceReviewInput: CreateServiceReviewInput!): ServiceReview!
+}

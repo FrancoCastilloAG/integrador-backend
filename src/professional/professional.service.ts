@@ -7,7 +7,12 @@ export class ProfessionalService {
   constructor(private readonly prisma: PrismaService) {}
 
   async createProfessional(data: Professional): Promise<Professional> {
-    return this.prisma.professional.create({ data });
+    const createdProfessional = this.prisma.professional.create({ data })
+    await this.prisma.user.update({
+      where: { id: data.userId },
+      data: { professionalId: (await createdProfessional).id}
+    });
+    return createdProfessional;
   }
 
   async getProfessionalById(id: number): Promise<Professional> {

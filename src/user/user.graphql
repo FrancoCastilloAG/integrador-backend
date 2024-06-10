@@ -6,6 +6,7 @@ type User {
   services: [Service!]!
   rol: String!
   professional: Professional
+  booking: [Booking!]!
 }
 
 input CreateUserInput {

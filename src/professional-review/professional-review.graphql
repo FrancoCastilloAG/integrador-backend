@@ -1,0 +1,17 @@
+type ProfessionalReview {
+  id: Int!
+  rating: Int!
+  comment: String!
+  bookingId: Int!
+  booking: [Booking!]!
+}
+
+input CreateProfessionalReviewInput {
+  rating: Int!
+  comment: String!
+  bookingId: Int!
+}
+
+type Mutation {
+  createProfessionalReview(createProfessionalReviewInput: CreateProfessionalReviewInput!): ProfessionalReview!
+}
