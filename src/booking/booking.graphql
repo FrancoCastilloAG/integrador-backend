@@ -1,21 +1,19 @@
-
-
 type Booking {
   id: Int!
   userId: Int!
-  user: User
-  IsActive: Boolean!
-  ServiceId: Int!
+  user: User!
+  isActive: Boolean!
+  serviceId: Int!
+  service: Service!
   professionalId: Int!
-  professional: Professional
+  professional: Professional!
   professionalReview: ProfessionalReview
   serviceReview: ServiceReview
 }
-
 input CreateBookingInput {
   userId: Int!
   IsActive: Boolean!
-  ServiceId: Int!
+  serviceId: Int!
   professionalId: Int!
 }
 

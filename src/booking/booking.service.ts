@@ -6,7 +6,10 @@ import { PrismaService } from 'src/prisma.service';
 export class BookingService {
   constructor(private readonly prisma: PrismaService) {}
 
-  async create(data: Booking) {
-    return this.prisma.booking.create({data});
+  async createBooking(data: Booking): Promise<Booking> {
+    //return this.prisma.booking.create({ data });
+    const newBooking = await this.prisma.booking.create({data});
+    console.log("nuevo booking",newBooking)
+    return newBooking;
   }
 }

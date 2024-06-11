@@ -22,7 +22,7 @@ export interface LoginInput {
 export interface CreateBookingInput {
     userId: number;
     IsActive: boolean;
-    ServiceId: number;
+    serviceId: number;
     professionalId: number;
 }
 
@@ -106,11 +106,12 @@ export interface AuthPayload {
 export interface Booking {
     id: number;
     userId: number;
-    user?: Nullable<User>;
-    IsActive: boolean;
-    ServiceId: number;
+    user: User;
+    isActive: boolean;
+    serviceId: number;
+    service: Service;
     professionalId: number;
-    professional?: Nullable<Professional>;
+    professional: Professional;
     professionalReview?: Nullable<ProfessionalReview>;
     serviceReview?: Nullable<ServiceReview>;
 }

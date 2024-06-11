@@ -23,7 +23,7 @@ export class ProfessionalResolver {
     if (!data) {
       throw new Error('Data is missing');
     }
-    console.log('resolver data user:', data);
+    console.log('resolver data profesional to user:', data);
     return this.professionalService.createProfessional(data);
   }
 

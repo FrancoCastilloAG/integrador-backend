@@ -12,6 +12,7 @@ export class ProfessionalService {
       where: { id: data.userId },
       data: { professionalId: (await createdProfessional).id}
     });
+    console.log("data que llego al service",data)
     return createdProfessional;
   }
 
