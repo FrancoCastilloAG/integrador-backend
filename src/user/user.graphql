@@ -24,6 +24,7 @@ input UpdateUserInput {
 
 type Query {
   getUserById(id: Int!): User
+  getUserByEmail(email: String!): User
   getUsers: [User!]!
 }
 

@@ -2,7 +2,7 @@ type Booking {
   id: Int!
   userId: Int!
   user: User!
-  isActive: Boolean!
+  IsActive: Boolean!
   serviceId: Int!
   service: Service!
   professionalId: Int!

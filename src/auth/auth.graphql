@@ -13,5 +13,6 @@ type Mutation {
   login(loginInput: LoginInput!): AuthPayload!
 }
 type AuthPayload {
+  user: User!
   token: String!
 }

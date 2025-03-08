@@ -17,6 +17,7 @@ export class UserService {
     });
     return userWithProfessional;
   }
+
   async getUserByEmail(email: string): Promise<User> {
     const userWithProfessional = await this.prisma.user.findUnique({
       where: { email: email },

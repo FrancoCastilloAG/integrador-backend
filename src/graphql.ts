@@ -100,6 +100,7 @@ export interface IMutation {
 }
 
 export interface AuthPayload {
+    user: User;
     token: string;
 }
 
@@ -107,7 +108,7 @@ export interface Booking {
     id: number;
     userId: number;
     user: User;
-    isActive: boolean;
+    IsActive: boolean;
     serviceId: number;
     service: Service;
     professionalId: number;
@@ -139,6 +140,7 @@ export interface IQuery {
     getAllServices(): Service[] | Promise<Service[]>;
     getServicesByProfessionalId(id: number): Service[] | Promise<Service[]>;
     getUserById(id: number): Nullable<User> | Promise<Nullable<User>>;
+    getUserByEmail(email: string): Nullable<User> | Promise<Nullable<User>>;
     getUsers(): User[] | Promise<User[]>;
 }
 

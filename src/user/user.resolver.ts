@@ -24,6 +24,11 @@ export class UserResolver {
     return this.userService.createUser(data);
   }
 
+  @Query('getUserByEmail')
+  async getUserByEmail(@Args('email') email: string): Promise<User | null> {
+    return this.userService.getUserByEmail(email);
+  }
+
   @Query('getUserById')
   async getUserById(@Args('id') id: number): Promise<User | null> {
     return this.userService.getUserById(id);
